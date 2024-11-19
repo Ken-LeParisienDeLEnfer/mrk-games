@@ -1,4 +1,6 @@
-export class Field implements PlayingGround {
+import { PlayingGround } from "../PlayingGround";
+
+export class FutField implements PlayingGround {
     width: number;
     height: number;
     backgroundColor: string;
