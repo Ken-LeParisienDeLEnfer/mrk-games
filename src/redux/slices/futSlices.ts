@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FutGame } from '../../models/fut/FutGame';
+import { FUT_TITLE, FUT_URI } from '../../constants/Constants';
 
 interface FutState {
     futGame: FutGame | null;
@@ -15,8 +16,9 @@ const futSlice = createSlice({
     reducers: {
         initializeGame(state,  action: PayloadAction<{ id: number }>) {
             const { id } = action.payload;
-            state.futGame = new FutGame(id);
-            state.futGame.init();
+            const futGame = new FutGame(id, FUT_TITLE, FUT_URI);
+            futGame.init();
+            return {...state, futGame: futGame.toPlainObject()}
         },
         modifyFutTile(state, action: PayloadAction<{ x: number, y: number }>) {
             const {x, y} = action.payload;

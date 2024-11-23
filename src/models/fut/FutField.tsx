@@ -6,9 +6,16 @@ export class FutField implements PlayingGround {
     backgroundColor: string;
 
     constructor () {
-        this.width = 20;
-        this.height = 40;
+        this.width = 5;
+        this.height = 8;
         this.backgroundColor = "#000000";
+    }
+    toPlainObject(): FutField {
+        return {
+            width: this.width,
+            height: this.width,
+            backgroundColor: this.backgroundColor
+        } as FutField;
     }
     
 }

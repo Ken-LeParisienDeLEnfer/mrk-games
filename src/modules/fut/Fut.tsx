@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { initializeGame, modifyFutTile } from "../../redux/slices/futSlices";
+import './Fut.css';
 
 function Fut() {
     const dispatch = useDispatch();
@@ -15,20 +16,21 @@ function Fut() {
         <main>
             <span>Fut</span>
             <button onClick={handleStartGame}>Start Game</button>
-            <div>
-                {game.futGame?.tiles.map((tile) => (
-                    <button
-                        key={`x${tile.x}y${tile.y}`}
-                        onClick={() => dispatch(modifyFutTile({x: tile.x, y: tile.y}))}
-                        style={{
-                        width: '40px',
-                        height: '40px',
-                        margin: '5px',
-                        backgroundColor: tile.isRevealed ? 'red' : 'green',
-                        }}
-                    >
-                        {tile.isRevealed ? 'toto' : ''}
-                    </button>
+            <div className="fut-tile-container">
+                {game.futGame?.tiles.map((tile, index) => (
+                    <React.Fragment key={index}>
+                        {tile.x === 0 && <br/> }
+                        <button
+                            key={`x${tile.x}y${tile.y}`}
+                            onClick={() => dispatch(modifyFutTile({x: tile.x, y: tile.y}))}
+                            className="fut-tile"
+                            style={{
+                            backgroundColor: tile.isRevealed ? 'red' : 'green',
+                            }}
+                        >
+                            {tile.isRevealed ? 'toto' : ''}
+                        </button>
+                    </React.Fragment>
                 ))}
       </div>
         </main>

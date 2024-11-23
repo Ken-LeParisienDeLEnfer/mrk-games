@@ -1,12 +1,23 @@
 import { PlayingGround } from "./PlayingGround";
 import { Tile } from "./Tile";
 
-export interface Game {
+export abstract class Game<T extends Tile, U extends PlayingGround> {
     id: number;
     title: string;
     uri: string;
-    playingGround: PlayingGround;
-    tiles: Tile[];
+    
+    constructor(
+        id: number, 
+        title: string,
+        uri: string,
+    ) {
+        this.id = id;
+        this.title = title;
+        this.uri = uri;  
+    }
+    abstract playingGround: U;
+    abstract tiles: T[];
 
-    init(): void
+    abstract init(): void;
+    abstract toPlainObject(): Game<T, U>;
 }
