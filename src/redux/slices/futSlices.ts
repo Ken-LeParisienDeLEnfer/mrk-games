@@ -25,5 +25,5 @@ const futSlice = createSlice({
     },
 });
 
-export const { modifyFutTile } = futSlice.actions;
+export const { modifyFutTile, setAction } = futSlice.actions;
 export default futSlice.reducer;

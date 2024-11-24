@@ -12,7 +12,9 @@
 .fut-turn {
     width: 50%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
 }
 
 .fut-tile {
@@ -41,4 +43,26 @@
 
 .play-tile {
     background-color: #67ef72;
+}
+
+.btn-fut-action {
+    background-color: #F9F300;
+    border: 5px solid #FFFFFF;
+    padding: 10px;
+    color: #000;
+    cursor: pointer;
+}
+
+.btn-fut-action:disabled {
+    background-color: #f9f30018;
+    border-color:#f9f30018;
+    color: #FFFFFF;
+    cursor: auto;
+}
+
+.fut-turn__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }

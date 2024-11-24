@@ -75,6 +75,36 @@ export class FutGame extends Game<FutTile, FutField> {
             tileTeamUser5.isRevealed = true;
             tileTeamUser5.value = "U";
         }
+        const tileTeamCPU1 = this.tiles.find(tile => tile.x === 2 && tile.y === 1);
+        if(tileTeamCPU1) {
+            tileTeamCPU1.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU1.isRevealed = false;
+            tileTeamCPU1.value = "X";
+        }
+        const tileTeamCPU2 = this.tiles.find(tile => tile.x === 1 && tile.y === 3);
+        if(tileTeamCPU2) {
+            tileTeamCPU2.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU2.isRevealed = true;
+            tileTeamCPU2.value = "X";
+        }
+        const tileTeamCPU3 = this.tiles.find(tile => tile.x === 2 && tile.y === 4);
+        if(tileTeamCPU3) {
+            tileTeamCPU3.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU3.isRevealed = true;
+            tileTeamCPU3.value = "X";
+        }
+        const tileTeamCPU4 = this.tiles.find(tile => tile.x === 3 && tile.y === 3);
+        if(tileTeamCPU4) {
+            tileTeamCPU4.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU4.isRevealed = true;
+            tileTeamCPU4.value = "X";
+        }
+        const tileTeamCPUGoal = this.tiles.find(tile => tile.x === 2 && tile.y === 0);
+        if(tileTeamCPUGoal) {
+            tileTeamCPUGoal.team = new FutTeam(TeamType.CPU);
+            tileTeamCPUGoal.isRevealed = true;
+            tileTeamCPUGoal.value = "X";
+        }
     }
 
     toPlainObject(): FutGame {
