@@ -1,8 +1,18 @@
+.fut-game {
+    display: flex;
+}
+
 .fut-tile-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 500px;
+    width: 50%;
+}
+
+.fut-turn {
+    width: 50%;
+    display: flex;
+    justify-content: center;
 }
 
 .fut-tile {
@@ -18,4 +28,17 @@
     margin: 5px; /* Space between buttons */
     font-size: 16px; /* Text size */
     box-sizing: border-box;
+}
+
+.goal-tile {
+    background-color: #fff;
+}
+
+.out-of-field-tile {
+    background-color: #000;
+    border-color: #000;
+}
+
+.play-tile {
+    background-color: #67ef72;
 }

@@ -1,19 +1,17 @@
 import { Tile } from "../Tile";
 
-export class FutTile implements Tile {
+export class MineTile implements Tile {
     x: number;
     y: number;
     isRevealed: boolean;
-    
-    
-    constructor(x: number, y: number);
-    constructor(x: number, y: number, isRevealed: boolean);
+    value: string;
 
-    constructor(x: number, y: number, isRevealed?: boolean)
+    constructor(x: number, y: number, isRevealed?: boolean, value?: string)
     {
         this.x = x;
         this.y = y;
         this.isRevealed = isRevealed ?? false;
+        this.value = value ?? '';
     }
 
 }
