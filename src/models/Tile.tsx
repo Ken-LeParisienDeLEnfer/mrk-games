@@ -3,4 +3,5 @@ export interface Tile {
     y: number;
     isRevealed: boolean;
     value: string;
+    isDisabled: boolean;
 }

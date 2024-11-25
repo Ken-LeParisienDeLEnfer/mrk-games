@@ -20,7 +20,7 @@ export class FutGame extends Game<FutTile, FutField> {
     
 
     constructor (id: number) {
-        super(id, FUT_TITLE, FUT_URI, true, true, false);
+        super(id, FUT_TITLE, FUT_URI, false, false, false);
         this.playingGround = new FutField();
         this.tiles = [];
         this.action = FutActionEnum.NONE;

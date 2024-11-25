@@ -10,11 +10,14 @@ export class FutTile implements Tile {
     type: FutTileTypeEnum;
     cssClass: string;
     isHasBall: boolean;
+    isHighlighted: boolean;
+    isDisabled: boolean;
+    nbAdvAround: number | undefined;
 
     
     team?: FutTeam | null;
 
-    constructor(x: number, y: number, team: FutTeam | null, cssClass: string, type: FutTileTypeEnum, isRevealed?: boolean, value?: string, isHasBall?: boolean)
+    constructor(x: number, y: number, team: FutTeam | null, cssClass: string, type: FutTileTypeEnum, isRevealed?: boolean, value?: string, isHasBall?: boolean, isHighlighted?: boolean, isDisabled?: boolean, nbAdvAround?: number)
     {
         this.x = x;
         this.y = y;
@@ -24,6 +27,9 @@ export class FutTile implements Tile {
         this.value = value ?? '';
         this.type = type;
         this.isHasBall = isHasBall ?? false;
+        this.isHighlighted = isHighlighted ?? false;
+        this.isDisabled = isDisabled ?? true;
+        this.nbAdvAround = nbAdvAround ?? undefined;
     }
     
 

@@ -30,10 +30,21 @@
     margin: 5px; /* Space between buttons */
     font-size: 16px; /* Text size */
     box-sizing: border-box;
+    cursor: pointer;
+}
+
+.fut-tile:disabled {
+    cursor: auto;
+    opacity: 0.50;
+    color: #000;
 }
 
 .goal-tile {
     background-color: #fff;
+}
+
+.fut-tile__highlighted {
+    border: 5px solid #fff;
 }
 
 .out-of-field-tile {
@@ -51,6 +62,10 @@
     padding: 10px;
     color: #000;
     cursor: pointer;
+}
+
+.btn-fut-action__selected {
+    background-color: #67ef72;
 }
 
 .btn-fut-action:disabled {
