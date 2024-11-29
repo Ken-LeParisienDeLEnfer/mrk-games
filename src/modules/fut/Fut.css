@@ -7,6 +7,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     width: 50%;
+    height: fit-content;
 }
 
 .fut-turn {
@@ -80,4 +81,14 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+}
+
+.ball-lost {
+    display: flex;
+    flex-direction: column;
+}
+
+.img-dribble-lost {
+    width: 300px;
+    margin: auto;
 }

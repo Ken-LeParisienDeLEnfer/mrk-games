@@ -17,6 +17,8 @@ export class FutGame extends Game<FutTile, FutField> {
 
     action: FutActionEnum;
 
+    isActionFinished: boolean;
+
     
 
     constructor (id: number) {
@@ -41,6 +43,7 @@ export class FutGame extends Game<FutTile, FutField> {
                 x++;
             }
         }
+        this.isActionFinished = false;
         
 
 
@@ -117,7 +120,8 @@ export class FutGame extends Game<FutTile, FutField> {
             isFinished: this.isFinished,
             playingGround: this.playingGround,
             tiles: this.tiles,
-            action: this.action
+            action: this.action,
+            isActionFinished: this.isActionFinished
         } as FutGame;
     }
 

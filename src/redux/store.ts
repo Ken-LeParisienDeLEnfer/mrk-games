@@ -9,6 +9,7 @@ const store = configureStore({
     getDefaultMiddleware({
         serializableCheck: {
             ignoredPaths: ["fut.futGame"],
+            ignoredActions: ["futGame/pass"]
         },
     }),
 });
