@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { possiblePassAction, possibleDribbleAction, possibleMoveAction, possibleShootAction, startGame } from "../../redux/slices/futSlices";
+import { possiblePassAction, possibleDribbleAction, possibleMoveAction, possibleShootAction, startGame, nextAction } from "../../redux/slices/futSlices";
 import './Fut.css';
 import Main from "../../styles/components/Main";
 import Heading from "../../styles/components/Heading";
@@ -72,6 +72,10 @@ function Fut() {
                             <Heading level={3}>BALL LOST !</Heading>
                             <img className="img-dribble-lost" src={dribbleLostImg} alt="Ball lost" />
                         </section>
+                    }
+                    {
+                        futGame.isMyTurn && futGame.action !== FutActionEnum.NONE && !futGame.isFinished && futGame.isActionFinished &&
+                        <button className="btn-primary" onClick={() => dispatch(nextAction())}>NEXT</button>
                     }
                 </div>
             </div>

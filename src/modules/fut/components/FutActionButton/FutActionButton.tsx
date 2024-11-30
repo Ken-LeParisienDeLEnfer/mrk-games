@@ -38,7 +38,7 @@ const FutActionButton = ({ tile }: {tile: FutTile}) => {
                     onClick={handleAction}
                     className={`fut-tile ${tile.cssClass} ${tile.isHighlighted ? 'fut-tile__highlighted' : ''}`}
                     style={{
-                        border: tile.isHasBall && futGame.isMyTurn ? '5px solid #F9F300' : '',
+                        border: tile.isHasBall && futGame.isMyTurn && !futGame.isActionFinished ? '5px solid #F9F300' : '',
                     }}
                     disabled={tile.isDisabled}>
             {tile.isRevealed && tile.team && tile.team.type} {tile.isHasBall && "/@"}

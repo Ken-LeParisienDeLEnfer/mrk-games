@@ -111,6 +111,7 @@ const futSlice = createSlice({
             state.futGame = {
                 ...state.futGame,
                 isFinished: isGameFinished,
+                isActionFinished: true,
                 tiles: tilesUpdated,
             }
         },
@@ -120,9 +121,10 @@ const futSlice = createSlice({
                 if(t.team && t.team.type === TeamType.USER && t.isHasBall) {
                     return {
                         ...t,
-                        isDisabled: false,
+                        isDisabled: true,
                         nbAdvAround: undefined,
                         isHasBall: false,
+                        isHighlighted: false,
                         team: null
                     }
                 } else if (action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
@@ -140,6 +142,7 @@ const futSlice = createSlice({
                 } else if (t.isHighlighted) {
                     return {
                         ...t,
+                        isDisabled: true,
                         isHighlighted: false
                     }
                 }
@@ -149,6 +152,7 @@ const futSlice = createSlice({
             state.futGame = {
                 ...state.futGame,
                 isFinished: isGameFinished,
+                isActionFinished: true,
                 tiles: tilesUpdated,
             }
         },
@@ -157,10 +161,27 @@ const futSlice = createSlice({
         },
         shoot(state, action: PayloadAction<{ tile: FutTile }>) {
             
+        },
+        nextAction(state) {
+            state.futGame = {
+                ...state.futGame,
+                action: FutActionEnum.NONE,
+                isActionFinished: true
+            }
         }
     }
 });
 
-export const { startGame, possiblePassAction, possibleDribbleAction, possibleShootAction, possibleMoveAction, pass, dribble, moveAnotherPlayer, shoot
+export const { 
+    startGame, 
+    possiblePassAction, 
+    possibleDribbleAction, 
+    possibleShootAction, 
+    possibleMoveAction, 
+    pass, 
+    dribble, 
+    moveAnotherPlayer, 
+    shoot, 
+    nextAction
  } = futSlice.actions;
 export default futSlice.reducer;
