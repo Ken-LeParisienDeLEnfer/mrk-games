@@ -36,7 +36,7 @@ function Fut() {
                     ))}
                 </section>
                 <div className="fut-turn">
-                    {futGame.isMyTurn && 
+                    {futGame.isMyTurn && futGame.isFinished === false &&
                     <section>
                         <Heading level={2}>YOUR TURN</Heading> 
                         <div className="fut-turn__actions">
@@ -55,7 +55,7 @@ function Fut() {
                             >MOVE ANOTHER PLAYER</button>
                         </div>
                     </section>}
-                    {futGame.isMyTurn && futGame.action !== FutActionEnum.NONE && 
+                    {futGame.isMyTurn && futGame.action !== FutActionEnum.NONE && futGame.isFinished === false &&
                     (futGame.action === FutActionEnum.PASS && <section><Heading level={3}>CHOOSE THE PLAYER TO PASS THE BALL TO</Heading></section>
                     || futGame.action === FutActionEnum.DRIBBLE && <section><Heading level={3}>CHOOSE WHERE TO DRIBBLE TO</Heading></section>
                     || futGame.action === FutActionEnum.SHOOT && <section><Heading level={3}>CHOOSE YOUR SHOOT TRAJECTORY !</Heading></section>

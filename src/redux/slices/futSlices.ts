@@ -6,6 +6,7 @@ import { TeamTypeEnum } from '../../models/TeamTypeEnum';
 import { FutTile } from '../../models/fut/FutTile';
 import { FutTileTypeEnum } from '../../models/fut/FutTileTypeEnum';
 import { ResultEnum } from '../../models/ResultEnum';
+import { getTrajectory } from '../../utils/futUtils';
 
 const initialState = {
     futGame: new FutGame(1),
@@ -42,7 +43,7 @@ const futSlice = createSlice({
             
 
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((tile: FutTile) => { 
-                const isHighlightedAndEnabled = tileSelected !== undefined && tile.team?.type === TeamTypeEnum.USER && !tile.isHasBall && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1;
+                const isHighlightedAndEnabled = tileSelected !== undefined && tile.team?.type === TeamTypeEnum.USER && !tile.isHasBall && ((Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1) || (tile.x + tile.y === tileSelected.x + tileSelected.y) || (tile.x - tile.y === tileSelected.x - tileSelected.y));
                 const nbAdvAround = tileSelected && tile.x === tileSelected.x && tile.y === tileSelected.y ? 
                     [...state.futGame.tiles].filter(
                     tile => tileSelected && tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1
@@ -147,6 +148,16 @@ const futSlice = createSlice({
         },
         pass(state, action: PayloadAction<{ tile: FutTile }>) {
             let isGameFinished: boolean = false;
+            const tileWithBall = [...state.futGame.tiles].find(t => t.isHasBall);
+            const trajectoryOfTheBall = getTrajectory(tileWithBall, action.payload.tile);
+            const isAdvOnPassTrajectory: boolean = trajectoryOfTheBall.some((point) =>
+                [...state.futGame.tiles].some(
+                    (tile) =>
+                        tile.team && tile.team.type === TeamTypeEnum.CPU &&
+                        tile.x === point.x &&
+                        tile.y === point.y
+                )
+            );
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((t: FutTile) => {
                 if(t.team && t.team.type === TeamTypeEnum.USER && t.isHasBall) {
                     return {
@@ -155,7 +166,7 @@ const futSlice = createSlice({
                         nbAdvAround: undefined,
                         isHasBall: false
                     }
-                } else if (action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
+                } else if (!isAdvOnPassTrajectory && action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
                     const nbAdvAround: number = [...state.futGame.tiles].filter(
                         tile => tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
                         ).length;
