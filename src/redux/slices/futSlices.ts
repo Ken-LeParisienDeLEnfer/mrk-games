@@ -77,7 +77,7 @@ const futSlice = createSlice({
         possibleShootAction(state) {
             const tileSelected: FutTile | undefined = [...state.futGame.tiles].find(tile => tile.team && tile.team.type === TeamTypeEnum.USER && tile.isHasBall);
             if(tileSelected) {
-                const isCanShootForward : boolean = [...state.futGame.tiles].find(tile => tileSelected && tileSelected.y === tile.y && tile.x === 0 && tileSelected?.type === FutTileTypeEnum.GOAL) !== undefined;
+                const isCanShootForward : boolean = [...state.futGame.tiles].find(tile => tileSelected && tile.y === 0 && tile.x === tileSelected.x && tile?.type === FutTileTypeEnum.GOAL) !== undefined;
                 let isCanShootDiagRight: boolean = false;
                 let y: number = tileSelected?.y;
                 let x: number = tileSelected?.x;
@@ -110,20 +110,24 @@ const futSlice = createSlice({
                                 isHighlighted: true,
                                 isDisabled: tile.y !== 0
                             }
-                        } else if (isCanShootForward && tile.x === x && tile.y < y) {
+                        } 
+                        
+                        if (isCanShootForward && tile.x === x && tile.y < y) {
                             return {
                                 ...tile,
                                 isHighlighted: true,
                                 isDisabled: tile.y !== 0
                             }
 
-                        } else if (isCanShootDiagLeft && tile.x < x && tile.y < y && (tile.x - tile.y === x - y)) {
+                        } 
+                        if (isCanShootDiagLeft && tile.x < x && tile.y < y && (tile.x - tile.y === x - y)) {
                             return {
                                 ...tile,
                                 isHighlighted: true,
                                 isDisabled: tile.y !== 0
                             }
-                        } else if(tile.isHighlighted) {
+                        }
+                        if (tile.isHighlighted) {
                             return {
                                 ...tile,
                                 isHighlighted: false,
@@ -150,7 +154,7 @@ const futSlice = createSlice({
             let isGameFinished: boolean = false;
             const tileWithBall = [...state.futGame.tiles].find(t => t.isHasBall);
             const trajectoryOfTheBall = getTrajectory(tileWithBall, action.payload.tile);
-            const isAdvOnPassTrajectory: boolean = trajectoryOfTheBall.some((point) =>
+            const tileAdvOnPassTrajectory = trajectoryOfTheBall.find((point) =>
                 [...state.futGame.tiles].some(
                     (tile) =>
                         tile.team && tile.team.type === TeamTypeEnum.CPU &&
@@ -162,19 +166,35 @@ const futSlice = createSlice({
                 if(t.team && t.team.type === TeamTypeEnum.USER && t.isHasBall) {
                     return {
                         ...t,
-                        isDisabled: false,
+                        isDisabled: true,
                         nbAdvAround: undefined,
-                        isHasBall: false
+                        isHighlighted: false,
+                        isHasBall: false,
                     }
-                } else if (!isAdvOnPassTrajectory && action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
+                } else if (tileAdvOnPassTrajectory && tileAdvOnPassTrajectory.x === t.x && tileAdvOnPassTrajectory.y === t.y) {
+                    isGameFinished = true;
+                    return {
+                        ...t,
+                        isHasBall: true,
+                        isDisabled: true,
+                    }
+                } else if (action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
                     const nbAdvAround: number = [...state.futGame.tiles].filter(
                         tile => tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
                         ).length;
                     isGameFinished = nbAdvAround > 1;
                     return {
                         ...t,
-                        isHasBall: true,
-                        nbAdvAround: nbAdvAround
+                        isHasBall: tileAdvOnPassTrajectory === undefined,
+                        isHighlighted: tileAdvOnPassTrajectory === undefined,
+                        nbAdvAround: tileAdvOnPassTrajectory === undefined ? nbAdvAround : undefined,
+                        isDisabled: true,
+                    }
+                } else if (t.isDisabled || t.isHighlighted) {
+                    return {
+                        ...t,
+                        isDisabled: true,
+                        isHighlighted: false
                     }
                 }
                 return t
@@ -183,6 +203,7 @@ const futSlice = createSlice({
             state.futGame = {
                 ...state.futGame,
                 isFinished: isGameFinished,
+                result: isGameFinished ? ResultEnum.L : undefined,
                 isActionFinished: true,
                 tiles: tilesUpdated,
             }

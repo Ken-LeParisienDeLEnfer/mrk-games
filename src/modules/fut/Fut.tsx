@@ -11,6 +11,7 @@ import FutActionButton from "./components/FutActionButton/FutActionButton";
 import ballLostImg from './assets/BallLost-removebg-preview.png';
 import dribbleLostImg from './assets/dribbleLost-removebg-preview.png';
 import shootLostImg from './assets/kolomuani-removebg-preview.png';
+import imgGoal from './assets/img-goal-removebg-preview.png';
 import { ResultEnum } from "../../models/ResultEnum";
 
 function Fut() {
@@ -80,6 +81,13 @@ function Fut() {
                         <section className="ball-lost">
                             <Heading level={3}>WHAT A SAVE !</Heading>
                             <img className="img-shoot-lost" src={shootLostImg} alt="What a save" />
+                        </section>
+                    }
+                    {
+                        futGame.isFinished && futGame.result === ResultEnum.W && 
+                        <section>
+                            <Heading level={3}>GOOOOOOAAAAAAL</Heading>
+                            <img className="img-goal" src={imgGoal} alt="GOOOAAAL" />
                         </section>
                     }
                     {
