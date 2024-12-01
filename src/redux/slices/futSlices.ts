@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FutGame } from '../../models/fut/FutGame';
 import { FutActionEnum } from '../../models/fut/FutActionEnum';
 import { FutTeam } from '../../models/fut/FutTeam';
-import { TeamType } from '../../models/TeamType';
+import { TeamTypeEnum } from '../../models/TeamTypeEnum';
 import { FutTile } from '../../models/fut/FutTile';
-import { toNamespacedPath } from 'path';
+import { FutTileTypeEnum } from '../../models/fut/FutTileTypeEnum';
+import { ResultEnum } from '../../models/ResultEnum';
 
 const initialState = {
     futGame: new FutGame(1),
@@ -16,13 +17,13 @@ const futSlice = createSlice({
     reducers: {
         startGame(state) {
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((t: FutTile) => {
-                if(t.team && t.team.type === TeamType.USER && t.isHasBall) {
+                if(t.team && t.team.type === TeamTypeEnum.USER && t.isHasBall) {
                     return {
                         ...t,
                         isDisabled: false,
                         nbAdvAround: 
                         [...state.futGame.tiles].filter(
-                        tile => tile.team?.type === TeamType.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
+                        tile => tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
                         ).length
                     }
                 }
@@ -37,14 +38,14 @@ const futSlice = createSlice({
             }
         },
         possiblePassAction(state) {
-            const tileSelected = [...state.futGame.tiles].find(tile => tile.team && tile.team.type === TeamType.USER && tile.isHasBall);
+            const tileSelected = [...state.futGame.tiles].find(tile => tile.team && tile.team.type === TeamTypeEnum.USER && tile.isHasBall);
             
 
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((tile: FutTile) => { 
-                const isHighlightedAndEnabled = tileSelected !== undefined && tile.team?.type === TeamType.USER && !tile.isHasBall && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1;
+                const isHighlightedAndEnabled = tileSelected !== undefined && tile.team?.type === TeamTypeEnum.USER && !tile.isHasBall && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1;
                 const nbAdvAround = tileSelected && tile.x === tileSelected.x && tile.y === tileSelected.y ? 
                     [...state.futGame.tiles].filter(
-                    tile => tileSelected && tile.team?.type === TeamType.CPU && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1
+                    tile => tileSelected && tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1
                     ).length : undefined;
                 return {...tile, isHighlighted: isHighlightedAndEnabled, isDisabled: !isHighlightedAndEnabled, nbAdvAround: nbAdvAround}});
             
@@ -55,14 +56,14 @@ const futSlice = createSlice({
             };
         },
         possibleDribbleAction(state) {
-            const tileSelected = [...state.futGame.tiles].find(tile => tile.team && tile.team.type === TeamType.USER && tile.isHasBall);
+            const tileSelected: FutTile | undefined = [...state.futGame.tiles].find(tile => tile.team && tile.team.type === TeamTypeEnum.USER && tile.isHasBall);
             
 
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((tile: FutTile) => { 
-                const isHighlightedAndEnabled = tileSelected !== undefined && tile.team?.type !== TeamType.USER && !tile.isHasBall && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1;
+                const isHighlightedAndEnabled = tileSelected !== undefined && tile.team?.type !== TeamTypeEnum.USER && !tile.isHasBall && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1;
                 const nbAdvAround = tileSelected && tile.x === tileSelected.x && tile.y === tileSelected.y ? 
                     [...state.futGame.tiles].filter(
-                    tile => tileSelected && tile.team?.type === TeamType.CPU && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1
+                    tile => tileSelected && tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - tileSelected.x) <= 1 && Math.abs(tile.y - tileSelected.y) <= 1
                     ).length : undefined;
                 return {...tile, isHighlighted: isHighlightedAndEnabled, isDisabled: !isHighlightedAndEnabled, nbAdvAround: nbAdvAround}});
             
@@ -73,10 +74,70 @@ const futSlice = createSlice({
             };
         },
         possibleShootAction(state) {
-            state.futGame = {
-                ...state.futGame,
-                action: FutActionEnum.SHOOT
-            };
+            const tileSelected: FutTile | undefined = [...state.futGame.tiles].find(tile => tile.team && tile.team.type === TeamTypeEnum.USER && tile.isHasBall);
+            if(tileSelected) {
+                const isCanShootForward : boolean = [...state.futGame.tiles].find(tile => tileSelected && tileSelected.y === tile.y && tile.x === 0 && tileSelected?.type === FutTileTypeEnum.GOAL) !== undefined;
+                let isCanShootDiagRight: boolean = false;
+                let y: number = tileSelected?.y;
+                let x: number = tileSelected?.x;
+                while (y >= 0 && isCanShootDiagRight === false) {
+                    const isGoalTile: FutTile | undefined = [...state.futGame.tiles].find(tile => tile.x === x + 1 && tile.y === y-1 && tile.type === FutTileTypeEnum.GOAL);
+                    if(isGoalTile !== undefined) {
+                        isCanShootDiagRight = true;
+                    }
+                    y--;
+                    x++;
+                }
+                y = tileSelected?.y;
+                x = tileSelected?.x;
+                let isCanShootDiagLeft: boolean = false;
+                while ((y >= 0 && x>=0) && isCanShootDiagLeft === false) {
+                    const isGoalTile: FutTile | undefined = [...state.futGame.tiles].find(tile => tile.x === x - 1 && tile.y === y-1 && tile.type === FutTileTypeEnum.GOAL);
+                    if(isGoalTile !== undefined) {
+                        isCanShootDiagLeft = true;
+                    }
+                    y--;
+                    x--;
+                }
+                y = tileSelected?.y;
+                x = tileSelected?.x;
+                let tilesUpdated: FutTile[] | null = null;
+                    tilesUpdated = [...state.futGame.tiles].map(tile => {
+                        if(isCanShootDiagRight && tile.x > x && tile.y < y && (tile.x + tile.y === x + y)) {
+                            return {
+                                ...tile,
+                                isHighlighted: true,
+                                isDisabled: tile.y !== 0
+                            }
+                        } else if (isCanShootForward && tile.x === x && tile.y < y) {
+                            return {
+                                ...tile,
+                                isHighlighted: true,
+                                isDisabled: tile.y !== 0
+                            }
+
+                        } else if (isCanShootDiagLeft && tile.x < x && tile.y < y && (tile.x - tile.y === x - y)) {
+                            return {
+                                ...tile,
+                                isHighlighted: true,
+                                isDisabled: tile.y !== 0
+                            }
+                        } else if(tile.isHighlighted) {
+                            return {
+                                ...tile,
+                                isHighlighted: false,
+                                isDisabled: false
+                            }
+                        }
+                        return tile;
+                    })
+                state.futGame = {
+                    ...state.futGame,
+                    tiles: tilesUpdated,
+                    action: FutActionEnum.SHOOT
+                };
+            }
+            
         },
         possibleMoveAction(state) {
             state.futGame = {
@@ -87,7 +148,7 @@ const futSlice = createSlice({
         pass(state, action: PayloadAction<{ tile: FutTile }>) {
             let isGameFinished: boolean = false;
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((t: FutTile) => {
-                if(t.team && t.team.type === TeamType.USER && t.isHasBall) {
+                if(t.team && t.team.type === TeamTypeEnum.USER && t.isHasBall) {
                     return {
                         ...t,
                         isDisabled: false,
@@ -96,7 +157,7 @@ const futSlice = createSlice({
                     }
                 } else if (action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
                     const nbAdvAround: number = [...state.futGame.tiles].filter(
-                        tile => tile.team?.type === TeamType.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
+                        tile => tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
                         ).length;
                     isGameFinished = nbAdvAround > 1;
                     return {
@@ -118,7 +179,7 @@ const futSlice = createSlice({
         dribble(state, action: PayloadAction<{ tile: FutTile }>) {
             let isGameFinished: boolean = false;
             const tilesUpdated: FutTile[] = [...state.futGame.tiles].map((t: FutTile) => {
-                if(t.team && t.team.type === TeamType.USER && t.isHasBall) {
+                if(t.team && t.team.type === TeamTypeEnum.USER && t.isHasBall) {
                     return {
                         ...t,
                         isDisabled: true,
@@ -128,16 +189,16 @@ const futSlice = createSlice({
                         team: null
                     }
                 } else if (action.payload.tile.x === t.x && action.payload.tile.y === t.y) {
-                    isGameFinished = t.team !== undefined && t.team?.type === TeamType.CPU;
+                    isGameFinished = t.team !== undefined && t.team?.type === TeamTypeEnum.CPU;
                     const nbAdvAround: number | undefined = isGameFinished ? undefined : [...state.futGame.tiles].filter(
-                        tile => tile.team?.type === TeamType.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
+                        tile => tile.team?.type === TeamTypeEnum.CPU && Math.abs(tile.x - t.x) <= 1 && Math.abs(tile.y - t.y) <= 1
                         ).length;
                     return {
                         ...t,
                         isHasBall: true,
                         isRevealed: true,
                         nbAdvAround: nbAdvAround,
-                        team: isGameFinished ? t.team : new FutTeam(TeamType.USER)
+                        team: isGameFinished ? t.team : new FutTeam(TeamTypeEnum.USER)
                     }
                 } else if (t.isHighlighted) {
                     return {
@@ -160,7 +221,13 @@ const futSlice = createSlice({
             
         },
         shoot(state, action: PayloadAction<{ tile: FutTile }>) {
-            
+            const isGoalSave = [...state.futGame.tiles].find(t => t.x === action.payload.tile.x && t.y === action.payload.tile.y && t.type === FutTileTypeEnum.GOAL && t.team && t.team.type === TeamTypeEnum.CPU ) !== undefined;
+            state.futGame = {
+                ...state.futGame,
+                isFinished: true,
+                isActionFinished: true,
+                result: isGoalSave ? ResultEnum.L : ResultEnum.W 
+            }
         },
         nextAction(state) {
             state.futGame = {

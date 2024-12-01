@@ -1,4 +1,4 @@
-export enum TeamType {
+export enum TeamTypeEnum {
     CPU = "CPU",
     USER = "USER"
 }

@@ -1,5 +1,5 @@
 import { Game } from "../Game";
-import { TeamType } from "../TeamType";
+import { TeamTypeEnum } from "../TeamTypeEnum";
 import { FutField } from "./FutField";
 import { FutTeam } from "./FutTeam";
 import { FutTile } from "./FutTile";
@@ -49,62 +49,62 @@ export class FutGame extends Game<FutTile, FutField> {
 
         const tileTeamUser1 = this.tiles.find(tile => tile.x === 2 && tile.y === 2);
         if(tileTeamUser1) {
-            tileTeamUser1.team = new FutTeam(TeamType.USER);
+            tileTeamUser1.team = new FutTeam(TeamTypeEnum.USER);
             tileTeamUser1.isRevealed = true;
             tileTeamUser1.value = "U";
         }
         const tileTeamUser2 = this.tiles.find(tile => tile.x === 0 && tile.y === 4);
         if(tileTeamUser2) {
-            tileTeamUser2.team = new FutTeam(TeamType.USER);
+            tileTeamUser2.team = new FutTeam(TeamTypeEnum.USER);
             tileTeamUser2.isRevealed = true;
             tileTeamUser2.value = "U";
         }
         const tileTeamUser3 = this.tiles.find(tile => tile.x === 3 && tile.y === 4);
         if(tileTeamUser3) {
-            tileTeamUser3.team = new FutTeam(TeamType.USER);
+            tileTeamUser3.team = new FutTeam(TeamTypeEnum.USER);
             tileTeamUser3.isRevealed = true;
             tileTeamUser3.value = "U";
         }
         const tileTeamUser4 = this.tiles.find(tile => tile.x === 2 && tile.y === 5);
         if(tileTeamUser4) {
-            tileTeamUser4.team = new FutTeam(TeamType.USER);
+            tileTeamUser4.team = new FutTeam(TeamTypeEnum.USER);
             tileTeamUser4.isRevealed = true;
             tileTeamUser4.value = "U";
             tileTeamUser4.isHasBall = true;
         }
         const tileTeamUser5 = this.tiles.find(tile => tile.x === 2 && tile.y === 7);
         if(tileTeamUser5) {
-            tileTeamUser5.team = new FutTeam(TeamType.USER);
+            tileTeamUser5.team = new FutTeam(TeamTypeEnum.USER);
             tileTeamUser5.isRevealed = true;
             tileTeamUser5.value = "U";
         }
         const tileTeamCPU1 = this.tiles.find(tile => tile.x === 2 && tile.y === 1);
         if(tileTeamCPU1) {
-            tileTeamCPU1.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU1.team = new FutTeam(TeamTypeEnum.CPU);
             tileTeamCPU1.isRevealed = false;
             tileTeamCPU1.value = "X";
         }
         const tileTeamCPU2 = this.tiles.find(tile => tile.x === 1 && tile.y === 3);
         if(tileTeamCPU2) {
-            tileTeamCPU2.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU2.team = new FutTeam(TeamTypeEnum.CPU);
             tileTeamCPU2.isRevealed = true;
             tileTeamCPU2.value = "X";
         }
         const tileTeamCPU3 = this.tiles.find(tile => tile.x === 2 && tile.y === 4);
         if(tileTeamCPU3) {
-            tileTeamCPU3.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU3.team = new FutTeam(TeamTypeEnum.CPU);
             tileTeamCPU3.isRevealed = true;
             tileTeamCPU3.value = "X";
         }
         const tileTeamCPU4 = this.tiles.find(tile => tile.x === 3 && tile.y === 3);
         if(tileTeamCPU4) {
-            tileTeamCPU4.team = new FutTeam(TeamType.CPU);
+            tileTeamCPU4.team = new FutTeam(TeamTypeEnum.CPU);
             tileTeamCPU4.isRevealed = true;
             tileTeamCPU4.value = "X";
         }
-        const tileTeamCPUGoal = this.tiles.find(tile => tile.x === 2 && tile.y === 0);
+        const tileTeamCPUGoal = this.tiles.find(tile => tile.x === 3 && tile.y === 0);
         if(tileTeamCPUGoal) {
-            tileTeamCPUGoal.team = new FutTeam(TeamType.CPU);
+            tileTeamCPUGoal.team = new FutTeam(TeamTypeEnum.CPU);
             tileTeamCPUGoal.isRevealed = true;
             tileTeamCPUGoal.value = "X";
         }

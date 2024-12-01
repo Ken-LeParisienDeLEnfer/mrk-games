@@ -1,4 +1,5 @@
 import { PlayingGround } from "./PlayingGround";
+import { ResultEnum } from "./ResultEnum";
 import { Tile } from "./Tile";
 
 export abstract class Game<T extends Tile, U extends PlayingGround> {
@@ -8,6 +9,7 @@ export abstract class Game<T extends Tile, U extends PlayingGround> {
     isMyTurn: boolean;
     isStarted: boolean;
     isFinished: boolean;
+    result: ResultEnum | undefined;
     
     constructor(
         id: number, 
@@ -15,14 +17,16 @@ export abstract class Game<T extends Tile, U extends PlayingGround> {
         uri: string,
         isMyTurn: boolean,
         isStarted: boolean,
-        isFinished: boolean
+        isFinished: boolean,
+        result?: ResultEnum
     ) {
         this.id = id;
         this.title = title;
         this.uri = uri;
         this.isMyTurn = isMyTurn;
         this.isStarted = isStarted;
-        this.isFinished = isFinished; 
+        this.isFinished = isFinished;
+        this.result = result; 
     }
     abstract playingGround: U;
     abstract tiles: T[];

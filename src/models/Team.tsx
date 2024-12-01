@@ -1,5 +1,5 @@
-import { TeamType } from "./TeamType";
+import { TeamTypeEnum } from "./TeamTypeEnum";
 
 export interface Team {
-    type: TeamType | null;
+    type: TeamTypeEnum | null;
 }

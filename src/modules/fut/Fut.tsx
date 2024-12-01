@@ -10,6 +10,8 @@ import { FutGame } from "../../models/fut/FutGame";
 import FutActionButton from "./components/FutActionButton/FutActionButton";
 import ballLostImg from './assets/BallLost-removebg-preview.png';
 import dribbleLostImg from './assets/dribbleLost-removebg-preview.png';
+import shootLostImg from './assets/kolomuani-removebg-preview.png';
+import { ResultEnum } from "../../models/ResultEnum";
 
 function Fut() {
     const dispatch = useDispatch();
@@ -39,17 +41,17 @@ function Fut() {
                         <Heading level={2}>YOUR TURN</Heading> 
                         <div className="fut-turn__actions">
                             <button key={'btn-pass'} onClick={() => dispatch(possiblePassAction())}
-                            className={FutActionEnum.PASS === futGame.action ? "btn-fut-action btn-fut-action__selected" : "btn-fut-action"}
+                            className={FutActionEnum.PASS === futGame.action ? "btn-primary btn-fut-action__selected" : "btn-primary"}
                             >PASS THE BALL</button>
                             <button key={'btn-dribble'} onClick={() => dispatch(possibleDribbleAction())}
-                            className={FutActionEnum.DRIBBLE === futGame.action ? "btn-fut-action btn-fut-action__selected" : "btn-fut-action"}
+                            className={FutActionEnum.DRIBBLE === futGame.action ? "btn-primary btn-fut-action__selected" : "btn-primary"}
                             >DRIBBLE</button>
                             <button key={'btn-shoot'} onClick={() => dispatch(possibleShootAction())}
-                            className={FutActionEnum.SHOOT === futGame.action ? "btn-fut-action btn-fut-action__selected" : "btn-fut-action"}
+                            className={FutActionEnum.SHOOT === futGame.action ? "btn-primary btn-fut-action__selected" : "btn-primary"}
                             disabled={!isCanShoot()}
                             >SHOOT</button>
                             <button key={'btn-move'} onClick={() => dispatch(possibleMoveAction())}
-                            className={FutActionEnum.MOVE_ANOTHER_PLAYER === futGame.action ? "btn-fut-action btn-fut-action__selected" : "btn-fut-action"}
+                            className={FutActionEnum.MOVE_ANOTHER_PLAYER === futGame.action ? "btn-primary btn-fut-action__selected" : "btn-primary"}
                             >MOVE ANOTHER PLAYER</button>
                         </div>
                     </section>}
@@ -60,21 +62,28 @@ function Fut() {
                     || futGame.action === FutActionEnum.MOVE_ANOTHER_PLAYER && <section><Heading level={3}>CHOOSE ANOTHER PLAY TO MOVE HIM ON THE FIELD</Heading></section>)
                     }
                     {
-                        futGame.isMyTurn && futGame.action === FutActionEnum.PASS && futGame.isFinished && 
+                        futGame.isMyTurn && futGame.action === FutActionEnum.PASS && futGame.isFinished && futGame.result === ResultEnum.L &&
                         <section className="ball-lost">
                             <Heading level={3}>BALL LOST !</Heading>
                             <img src={ballLostImg} alt="Ball lost" />
                         </section>
                     }
                     {
-                        futGame.isMyTurn && futGame.action === FutActionEnum.DRIBBLE && futGame.isFinished && 
+                        futGame.isMyTurn && futGame.action === FutActionEnum.DRIBBLE && futGame.isFinished && futGame.result === ResultEnum.L &&
                         <section className="ball-lost">
                             <Heading level={3}>BALL LOST !</Heading>
                             <img className="img-dribble-lost" src={dribbleLostImg} alt="Ball lost" />
                         </section>
                     }
                     {
-                        futGame.isMyTurn && futGame.action !== FutActionEnum.NONE && !futGame.isFinished && futGame.isActionFinished &&
+                        futGame.isMyTurn && futGame.action === FutActionEnum.SHOOT && futGame.isFinished && futGame.result === ResultEnum.L &&
+                        <section className="ball-lost">
+                            <Heading level={3}>WHAT A SAVE !</Heading>
+                            <img className="img-shoot-lost" src={shootLostImg} alt="What a save" />
+                        </section>
+                    }
+                    {
+                        futGame.isMyTurn && futGame.action !== FutActionEnum.NONE && !futGame.isFinished && futGame.result === undefined && futGame.isActionFinished &&
                         <button className="btn-primary" onClick={() => dispatch(nextAction())}>NEXT</button>
                     }
                 </div>

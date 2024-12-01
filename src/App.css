@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+button.btn-primary:hover {
+  background: #67ef72;
+}
+
+button.btn-primary {
+  background: #F9F300;
+  padding: 10px;
+  width: fit-content;
+  border: 5px solid #FFF;
+  cursor: pointer;
+}

@@ -1,9 +1,9 @@
 import { Team } from "../Team";
-import { TeamType } from "../TeamType";
+import { TeamTypeEnum } from "../TeamTypeEnum";
 
 export class FutTeam implements Team {
-    type: TeamType;
-    constructor (type: TeamType) {
+    type: TeamTypeEnum;
+    constructor (type: TeamTypeEnum) {
         this.type = type;
     }
 }
