@@ -27,7 +27,7 @@ function Fut() {
         <Main>
             <span>Fut</span>
             { !futGame?.isStarted && <button onClick={() => dispatch(startGame())}>Start Game</button>}
-            <div className="fut-game">
+            <div className="game">
                 <section className="fut-tile-container">
                     {futGame.isStarted && futGame.tiles.map((tile, index) => (
                         <React.Fragment key={`${tile.x}-${tile.y}-${index}`}>

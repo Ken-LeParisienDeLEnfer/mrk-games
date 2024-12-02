@@ -31,6 +31,5 @@ export abstract class Game<T extends Tile, U extends PlayingGround> {
     abstract playingGround: U;
     abstract tiles: T[];
 
-    abstract init(): void;
     abstract toPlainObject(): Game<T, U>;
 }

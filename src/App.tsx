@@ -6,6 +6,7 @@ import { theme } from './styles/theme/theme';
 import Header from './components/Header/Header';
 import Home from './modules/home/Home';
 import Fut from './modules/fut/Fut';
+import NavalBattle from './modules/naval-battle/NavalBattle';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/fut" element={<Fut />} />
+          <Route path="/naval-battle" element={<NavalBattle />} />
           <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       </Router>

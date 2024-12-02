@@ -125,8 +125,5 @@ export class FutGame extends Game<FutTile, FutField> {
         } as FutGame;
     }
 
-    init(): void {
-        // a voir
-    }
 
 }

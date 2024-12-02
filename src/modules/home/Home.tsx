@@ -6,6 +6,7 @@ const Home = () => (
     <Main>
         <Heading level={1}>Home</Heading>
         <Card link={"fut"} title={"FUT"} />
+        <Card link={"naval-battle"} title={"Naval Battle"} />
     </Main>
 );
 

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import futGameReducer from './slices/futSlices';
+import navGameReducer from './slices/navSlices';
 
 const store = configureStore({
   reducer: {
     fut: futGameReducer,
+    nav: navGameReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

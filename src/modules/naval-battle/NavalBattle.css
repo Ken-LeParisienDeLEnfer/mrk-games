@@ -1,0 +1,55 @@
+.select-player {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.select-player > div {
+    display: flex;
+    gap: 10px;
+}
+
+.player-tag {
+    background: #F9F300;
+    padding: 5px 10px;
+}
+
+.boats-to-position {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.boat-el {
+    box-shadow: 10px 10px #F9F300;
+    background: #1e1e1e;
+    border: 1px solid #5d5b5b;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    width: 20%;
+    padding: 10px;
+}
+
+.boat-el header {
+    display: flex;
+    justify-content: center;
+}
+
+.boat-el footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.boat-el img {
+    width: 100%;
+}
+
+.boat-el__value {
+    color: #F9F300;
+}
+
+.boat-el__label {
+    color: #FFF;
+}

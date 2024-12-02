@@ -37,7 +37,14 @@
   }
 }
 
-button.btn-primary:hover {
+.game {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  align-items: center;
+}
+
+button.btn-primary:hover, button.btn-secondary:hover {
   background: #67ef72;
 }
 
@@ -45,6 +52,14 @@ button.btn-primary {
   background: #F9F300;
   padding: 10px;
   width: fit-content;
-  border: 5px solid #FFF;
+  border: 2px solid #FFF;
+  cursor: pointer;
+}
+
+button.btn-secondary {
+  background: #FFF;
+  padding: 10px;
+  width: fit-content;
+  border: 2px solid #F9F300;
   cursor: pointer;
 }
