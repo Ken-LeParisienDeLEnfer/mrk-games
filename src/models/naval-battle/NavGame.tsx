@@ -5,6 +5,7 @@ import { DestroyerBoat } from "./DestroyerBoat";
 import { NavActionEnum } from "./NavActionEnum";
 import { NavBoat } from "./NavBoat";
 import { NavField } from "./NavField";
+import { NavPlayTile } from "./NavPlayTile";
 import { NavReferentialTile } from "./NavReferentialTile";
 import { NavTile } from "./NavTile";
 import { SubmarineBoat } from "./SubmarineBoat";
@@ -43,7 +44,7 @@ export class NavGame extends Game<NavTile, NavField> {
                 if(y === 0 || x === 0) {
                     this.tiles.push(new NavReferentialTile(x, y));
                 } else {
-                    this.tiles.push(new NavTile(x, y));
+                    this.tiles.push(new NavPlayTile(x, y));
                 }
                 x++;
             }
@@ -58,7 +59,7 @@ export class NavGame extends Game<NavTile, NavField> {
                 if(y === 0 || x === 0) {
                     this.tilesAdv.push(new NavReferentialTile(x, y));
                 } else {
-                    this.tilesAdv.push(new NavTile(x, y));
+                    this.tilesAdv.push(new NavPlayTile(x, y));
                 }
                 x++;
             }

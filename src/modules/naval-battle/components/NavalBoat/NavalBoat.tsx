@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Coordinate } from '../../../../models/naval-battle/Coordinate';
 import { RootState } from '../../../../redux/store';
 import { NavGame } from '../../../../models/naval-battle/NavGame';
-
+import './NavalBoat.css';
+import { confirmBoatPosition } from '../../../../redux/slices/navSlices';
 
 const NavalBoat = ({boat}: {boat: NavBoat}) => {
     const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const NavalBoat = ({boat}: {boat: NavBoat}) => {
     const img = require(`${boat.img}`);
 
     const handleConfirmPlacement = () => {
-        throw new Error('Function not implemented.');
+        if(startXCoordinate && startYCoordinate && endCoordinate)
+            dispatch(confirmBoatPosition({boat, startCoordinate: new Coordinate(startXCoordinate, startYCoordinate), endCoordinate}));
     }
 
     const handleCancelPlacement = () => {
@@ -46,6 +48,7 @@ const NavalBoat = ({boat}: {boat: NavBoat}) => {
 
     const handleEndCoordinateChange = (event: ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
+        setEndCoordinate(JSON.parse(event.target.value) as Coordinate);
     }
 
     const calculatePossibleEndCoordinates = (y: number, x: number) => {
@@ -102,7 +105,7 @@ const NavalBoat = ({boat}: {boat: NavBoat}) => {
                     </figure>
                     <footer>
                         <button className="btn-primary" onClick={() => handleConfirmPlacement()} >CONFIRM</button>
-                        <button className="btn-secondary" onClick={() => handleCancelPlacement()}>CANCEL PLACEMENT</button>
+                        <button className="btn-secondary" onClick={() => handleCancelPlacement()}>CANCEL</button>
                     </footer>
                </article>
     )

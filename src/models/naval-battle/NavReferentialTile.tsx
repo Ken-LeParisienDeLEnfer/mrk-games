@@ -1,23 +1,12 @@
 import { getAlphabetByIndex } from "../../utils/navUtils";
 import { Tile } from "../Tile";
+import { NavTile } from "./NavTile";
 
-export class NavReferentialTile implements Tile {
-    x: number;
-    y: number;
-    isRevealed: boolean;
-    value: string;
-    isDisabled: boolean;
-    isHit: boolean;
-    isTouched: boolean;
+export class NavReferentialTile extends NavTile {
 
     constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-        this.isRevealed = true;
+        super(x,y,true);
         this.value = x === 0 && y === 0 ? "XY" : (y === 0 ? x.toString() : getAlphabetByIndex(y)); 
-        this.isDisabled = true;
-        this.isHit = false;
-        this.isTouched = false;
     }
 
 }

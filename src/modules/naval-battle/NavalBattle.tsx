@@ -14,6 +14,7 @@ import NavalBoat from "./components/NavalBoat/NavalBoat";
 import React from "react";
 import { NavReferentialTile } from "../../models/naval-battle/NavReferentialTile";
 import { NavTile } from "../../models/naval-battle/NavTile";
+import { NavPlayTile } from "../../models/naval-battle/NavPlayTile";
 
 function NavalBattle() {
     const dispatch = useDispatch();
@@ -52,9 +53,9 @@ function NavalBattle() {
                             {navGame.tiles.map((tile, index) => (
                             <React.Fragment key={`${tile.x}-${tile.y}-${index}`}>
                                 {tile.x === 0 && <br/> }
-                                <article className="nav-tile">
+                                <article className={tile instanceof NavReferentialTile ? 'nav-ref' : 'nav-tile'}>
                                     {tile instanceof NavReferentialTile && <span>{tile.value}</span>}
-                                    {tile instanceof NavTile && <span>{getAlphabetByIndex(tile.y)}{tile.x}</span>}
+                                    {tile instanceof NavPlayTile && <span>{getAlphabetByIndex(tile.y)}{tile.x}</span>}
                                 </article>
                             </React.Fragment>
                             ))}

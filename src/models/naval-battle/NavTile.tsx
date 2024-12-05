@@ -8,8 +8,9 @@ export class NavTile implements Tile {
     isDisabled: boolean;
     isHit: boolean;
     isTouched: boolean;
+    boatId: number | undefined;
 
-    constructor(x: number, y: number, isRevealed?: boolean, value?: string, isDisabled?: boolean, isHit?: boolean, isTouched?: boolean) {
+    constructor(x: number, y: number, isRevealed?: boolean, value?: string, isDisabled?: boolean, isHit?: boolean, isTouched?: boolean, boatId ?: number) {
         this.x = x;
         this.y = y;
         this.isRevealed = isRevealed ?? true;
@@ -17,6 +18,7 @@ export class NavTile implements Tile {
         this.isDisabled = isDisabled ?? true;
         this.isHit = isHit ?? false;
         this.isTouched = isTouched ?? false;
+        this.boatId = boatId ?? undefined;
     }
 
 }

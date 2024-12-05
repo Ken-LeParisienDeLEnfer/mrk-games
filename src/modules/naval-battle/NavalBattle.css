@@ -24,40 +24,7 @@
     overflow: auto;
 }
 
-.boat-el {
-    box-shadow: 10px 10px #F9F300;
-    background: #1e1e1e;
-    border: 1px solid #5d5b5b;
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    width: 90%;
-    padding: 10px;
-}
-
-.boat-el header {
-    display: flex;
-    justify-content: center;
-}
-
-.boat-el footer {
-    display: flex;
-    justify-content: space-between;
-}
-
-.boat-el img {
-    width: 100%;
-}
-
-.boat-el__value {
-    color: #F9F300;
-}
-
-.boat-el__label {
-    color: #FFF;
-}
-
-.nav-tile {
+.nav-tile, .nav-ref {
     flex: 1 0 calc(20% - 10px); /* Each button takes up 20% of the row minus the gap */
     text-align: center; /* Center text inside the button */
     border: 1px solid #ccc; /* Add a border for visibility */
@@ -73,8 +40,16 @@
     cursor: pointer;
 }
 
+.nav-ref {
+    background: #fff;
+}
+
 .nav-tile span {
     color: #FFF;
+}
+
+.nav-ref span {
+    color: #000;
 }
 
 .position-round {
