@@ -16,10 +16,10 @@ export class NavGame extends Game<NavTile, NavField> {
     playingGround: NavField;
 
     tiles: NavTile[];
-    tilesUser2: NavTile[];
+    tilesAdv: NavTile[];
 
     boats: NavBoat[];
-    boatsUser2: NavBoat[];
+    boatsAdv: NavBoat[];
 
     action: NavActionEnum;
 
@@ -36,36 +36,38 @@ export class NavGame extends Game<NavTile, NavField> {
         this.tiles = [];
         for(let y: number = 0; y < this.playingGround.height; y++) {
             let x: number = 0;
-            if (y === 0) {
+            /*if (y === 0) {
                 this.tiles.push(new NavReferentialTile(0, 0, ""));
-            }
+            }*/
             while (x < this.playingGround.width) {
                 if(y === 0 || x === 0) {
                     this.tiles.push(new NavReferentialTile(x, y));
+                } else {
+                    this.tiles.push(new NavTile(x, y));
                 }
-                this.tiles.push(new NavTile(x, y));
                 x++;
             }
         }
-        this.tilesUser2 = [];
+        this.tilesAdv = [];
         for(let y: number = 0; y < this.playingGround.height; y++) {
             let x: number = 0;
-            if (y === 0) {
-                this.tilesUser2.push(new NavReferentialTile(0, 0, ""));
-            }
+            /*if (y === 0) {
+                this.tilesAdv.push(new NavReferentialTile(0, 0));
+            } */
             while (x < this.playingGround.width) {
                 if(y === 0 || x === 0) {
-                    this.tilesUser2.push(new NavReferentialTile(x, y));
+                    this.tilesAdv.push(new NavReferentialTile(x, y));
+                } else {
+                    this.tilesAdv.push(new NavTile(x, y));
                 }
-                this.tilesUser2.push(new NavTile(x, y));
                 x++;
             }
         }
 
         this.boats = [];
-        this.boats.push(new AircraftCarrierBoat(), new DestroyerBoat(), new SubmarineBoat(), new SubmarineBoat(), new TorpedoBoat());
-        this.boatsUser2 = [];
-        this.boatsUser2.push(new AircraftCarrierBoat(), new DestroyerBoat(), new SubmarineBoat(), new SubmarineBoat(), new TorpedoBoat());
+        this.boats.push(new AircraftCarrierBoat(), new DestroyerBoat(), new SubmarineBoat(3), new SubmarineBoat(4), new TorpedoBoat());
+        this.boatsAdv = [];
+        this.boatsAdv.push(new AircraftCarrierBoat(), new DestroyerBoat(), new SubmarineBoat(3), new SubmarineBoat(4), new TorpedoBoat());
     }
 
     toPlainObject(): Game<NavTile, NavField> {

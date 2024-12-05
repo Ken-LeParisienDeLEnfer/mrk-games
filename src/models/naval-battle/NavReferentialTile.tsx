@@ -10,11 +10,11 @@ export class NavReferentialTile implements Tile {
     isHit: boolean;
     isTouched: boolean;
 
-    constructor(x: number, y: number, value?: string) {
+    constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
         this.isRevealed = true;
-        this.value = value ?? y === 0 ? x.toString() : getAlphabetByIndex(y); 
+        this.value = x === 0 && y === 0 ? "XY" : (y === 0 ? x.toString() : getAlphabetByIndex(y)); 
         this.isDisabled = true;
         this.isHit = false;
         this.isTouched = false;

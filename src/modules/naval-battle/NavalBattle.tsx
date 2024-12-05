@@ -10,6 +10,10 @@ import './NavalBattle.css';
 import { NavActionEnum } from "../../models/naval-battle/NavActionEnum";
 import { getAlphabetByIndex } from "../../utils/navUtils";
 import { NavBoat } from "../../models/naval-battle/NavBoat";
+import NavalBoat from "./components/NavalBoat/NavalBoat";
+import React from "react";
+import { NavReferentialTile } from "../../models/naval-battle/NavReferentialTile";
+import { NavTile } from "../../models/naval-battle/NavTile";
 
 function NavalBattle() {
     const dispatch = useDispatch();
@@ -38,36 +42,26 @@ function NavalBattle() {
                     </div>
                 </section>}
             {navGame.isStarted && navGame.action === NavActionEnum.POSITION_BOATS && 
-            <section className="boats-to-position">
-               { navGame.boats.map((boat, index) => {
-                const img = require(`${boat.img}`);
-                
-                return <article key={index} className="boat-el">
-                    <header><Heading level={4}>{boat.name.toUpperCase()}</Heading></header>
-                    <figure>
-                        <img src={img} alt={boat.name}/>
-                        <figcaption>
-                            <fieldset>
-                                <span className="boat-el__label">SIZE</span>
-                                <span className="boat-el__value">{boat.length}</span>
-                            </fieldset>
-                            
-                            <fieldset>
-                                <span className="boat-el__label">First coordinate</span><span className="boat-el__value">{getAlphabetByIndex(boat.coordinates[0]?.y)}{boat.coordinates[0]?.x}</span>
-                            </fieldset>
-                            <fieldset>    
-                                <span className="boat-el__label">Last coordinate</span><span className="boat-el__value">{getAlphabetByIndex(boat.coordinates[boat.length - 1]?.y)}{boat.coordinates[boat.length - 1]?.x}</span>
-                            </fieldset>
-                        </figcaption>
-                    </figure>
-                    <footer>
-                        <button className="btn-primary" onClick={() => handleSetCoordinate(boat)} >PLACE BOAT</button>
-                        <button className="btn-secondary" onClick={() => handleCancelCoordinate(boat)}>CANCEL PLACEMENT</button>
-                    </footer>
-               </article>})} 
-            
-            </section>}
-            
+                <div className="position-round">
+                    <section className="boats-to-position">
+                    { navGame.boats.map((boat, index) => <NavalBoat key={index} boat={boat} /> 
+                    )}
+                    </section>
+                    <section className="position-map">
+                        <div className="map-sticky">
+                            {navGame.tiles.map((tile, index) => (
+                            <React.Fragment key={`${tile.x}-${tile.y}-${index}`}>
+                                {tile.x === 0 && <br/> }
+                                <article className="nav-tile">
+                                    {tile instanceof NavReferentialTile && <span>{tile.value}</span>}
+                                    {tile instanceof NavTile && <span>{getAlphabetByIndex(tile.y)}{tile.x}</span>}
+                                </article>
+                            </React.Fragment>
+                            ))}
+                    </div>
+                    </section>
+                </div>
+            }
             
         </Main>
     );
